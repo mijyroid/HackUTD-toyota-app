@@ -1,147 +1,501 @@
 import React, { useState, useMemo, useEffect } from 'react';
-// 1. IMPORT MORE ICONS for new features
+
 import {
   Search, X, SlidersHorizontal, ChevronDown, ChevronUp,
   Heart, MapPin, MessageSquare, Award, XCircle
 } from 'lucide-react';
 
 
-// --- (Person 2: Your Zone) ---
-// This is your mock "database". I've added all the new fields.
-// Add more cars and find real image URLs!
+//Mock "database" for the cars from 
 const DB_CARS = [
   {
     id: 1,
-    model: 'RAV4',
-    trim: 'Hybrid XLE',
+    model: 'Corolla',
+    trim: 'LE',
     year: 2025,
-    price: 36500,
-    mileage: 15,
-    bodyType: 'SUV',
-    fuelType: 'Hybrid',
-    mpg: 40,
-    drivetrain: 'AWD',
-    color: 'Silver',
-    seatingCapacity: 5,
-    features: ['Sunroof', 'Apple CarPlay', 'AWD'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=RAV4+Hybrid',
-  },
-  {
-    id: 2,
-    model: 'Camry',
-    trim: 'SE',
-    year: 2025,
-    price: 29800,
+    price: 22725,
     mileage: 10,
     bodyType: 'Sedan',
-    fuelType: 'Gas',
-    mpg: 31,
-    drivetrain: 'FWD',
-    color: 'Blue',
-    seatingCapacity: 5,
-    features: ['Apple CarPlay', 'Toyota Safety Sense'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=Camry+SE',
-  },
-  {
-    id: 3,
-    model: 'Grand Highlander',
-    trim: 'Limited',
-    year: 2024,
-    price: 51200,
-    mileage: 25,
-    bodyType: 'SUV',
-    fuelType: 'Gas',
-    mpg: 24,
-    drivetrain: 'AWD',
-    color: 'Black',
-    seatingCapacity: 7,
-    features: ['Sunroof', 'Leather Seats', 'Apple CarPlay', 'AWD', '3-Row Seating'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=Grand+Highlander',
-  },
-  {
-    id: 4,
-    model: 'Tacoma',
-    trim: 'TRD Off-Road',
-    year: 2025,
-    price: 44500,
-    mileage: 5,
-    bodyType: 'Truck',
-    fuelType: 'Gas',
-    mpg: 22,
-    drivetrain: 'AWD',
-    color: 'Red',
-    seatingCapacity: 5,
-    features: ['Apple CarPlay', 'AWD', 'Off-Road Suspension'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=Tacoma+TRD',
-  },
-  {
-    id: 5,
-    model: 'Corolla',
-    trim: 'Hybrid LE',
-    year: 2025,
-    price: 24900,
-    mileage: 12,
-    bodyType: 'Sedan',
-    fuelType: 'Hybrid',
-    mpg: 50,
+    fuelType: 'Gasoline',
+    mpg: 35,
     drivetrain: 'FWD',
     color: 'White',
     seatingCapacity: 5,
-    features: ['Apple CarPlay', 'Toyota Safety Sense'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=Corolla+Hybrid',
+    features: ['Apple CarPlay', 'Backup Camera', 'Lane Assist'],
+    image: '/images/CorollaLE.png',
+  },
+  {
+    id: 2,
+    model: 'Corolla Hybrid LE',
+    trim: 'SE',
+    year: 2025,
+    price: 24575,
+    mileage: 10,
+    bodyType: 'Sedan',
+    fuelType: 'Hybrid',
+    mpg: 52,
+    drivetrain: 'FWD',
+    color: 'Blue',
+    seatingCapacity: 5,
+    features: ['Adaptive Cruise Control', 'Heated Seats', 'Apple CarPlay'],
+    image: '/images/CorollaHybridLE.png',
+  },
+  {
+    id: 3,
+    model: 'Corolla Hatchback',
+    trim: 'XSE',
+    year: 2025,
+    price: 24180,
+    mileage: 12,
+    bodyType: 'Hatchback',
+    fuelType: 'Gasoline',
+    mpg: 33,
+    drivetrain: 'FWD',
+    color: 'Red',
+    seatingCapacity: 5,
+    features: ['Sport Mode', 'Touchscreen Display', 'Backup Camera'],
+    image: '/images/CorollaHatchbackXSE.png',
+  },
+  {
+    id: 4,
+    model: 'Prius',
+    trim: 'XLE',
+    year: 2025,
+    price: 28550,
+    mileage: 8,
+    bodyType: 'Hatchback',
+    fuelType: 'Hybrid',
+    mpg: 57,
+    drivetrain: 'FWD',
+    color: 'Gray',
+    seatingCapacity: 5,
+    features: ['Adaptive Cruise Control', 'Wireless CarPlay', 'Lane Keep Assist'],
+    image: '/images/PriusXLE.png',
+  },
+  {
+    id: 5,
+    model: 'Prius Plug-in Hybrid',
+    trim: 'Premium XSE',
+    year: 2025,
+    price: 33775,
+    mileage: 6,
+    bodyType: 'Hatchback',
+    fuelType: 'Plug-in Hybrid',
+    mpg: 50,
+    drivetrain: 'FWD',
+    color: 'Gray',
+    seatingCapacity: 5,
+    features: ['EV Mode', 'Heated Seats', 'Panoramic Display'],
+    image: '/images/PriusPlug-in.png',
   },
   {
     id: 6,
-    model: 'bZ4X',
-    trim: 'XLE',
-    year: 2024,
-    price: 43070,
-    mileage: 50,
-    bodyType: 'SUV',
-    fuelType: 'Electric',
-    mpg: 119, // eMPG
+    model: 'Camry',
+    trim: 'SE',
+    year: 2025,
+    price: 29000,
+    mileage: 5,
+    bodyType: 'Sedan',
+    fuelType: 'Gasoline',
+    mpg: 33,
     drivetrain: 'FWD',
-    color: 'Silver',
+    color: 'Gray',
     seatingCapacity: 5,
-    features: ['Apple CarPlay', 'Toyota Safety Sense', 'Panoramic Roof'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=bZ4X+Electric',
+    features: ['Leather Steering Wheel', 'Apple CarPlay', 'Blind Spot Monitor'],
+    image: '/images/CamrySE.png',
   },
   {
     id: 7,
-    model: 'Sienna',
-    trim: 'XLE',
+    model: 'GR86',
+    trim: 'Premium',
     year: 2025,
-    price: 43100,
+    price: 30800,
+    mileage: 3,
+    bodyType: 'Coupe',
+    fuelType: 'Gasoline',
+    mpg: 27,
+    drivetrain: 'RWD',
+    color: 'Red',
+    seatingCapacity: 4,
+    features: ['Sport Suspension', 'Launch Control', 'Digital Gauge Cluster'],
+    image: '/images/GR86AT.png',
+  },
+  {
+    id: 8,
+    model: 'GR Corolla',
+    trim: 'Core',
+    year: 2025,
+    price: 39920,
+    mileage: 4,
+    bodyType: 'Hatchback',
+    fuelType: 'Gasoline',
+    mpg: 28,
+    drivetrain: 'AWD',
+    color: 'Silver',
+    seatingCapacity: 5,
+    features: ['AWD', 'Manual Transmission', 'Sport Mode'],
+    image: '/images/gr-corolla.png',
+  },
+  {
+    id: 9,
+    model: 'GR Supra',
+    trim: '3.0 Premium',
+    year: 2025,
+    price: 57500,
+    mileage: 3,
+    bodyType: 'Coupe',
+    fuelType: 'Gasoline',
+    mpg: 28,
+    drivetrain: 'RWD',
+    color: 'Red',
+    seatingCapacity: 2,
+    features: ['Turbocharged Engine', 'Sport Suspension', 'Wireless Charging'],
+    image: '/images/gr-supra.png',
+  },
+  {
+    id: 10,
+    model: 'Sienna',
+    trim: 'XSE Hybrid',
+    year: 2025,
+    price: 40120,
     mileage: 8,
     bodyType: 'Minivan',
     fuelType: 'Hybrid',
     mpg: 36,
     drivetrain: 'AWD',
-    color: 'Gray',
+    color: 'Green',
     seatingCapacity: 8,
-    features: ['Apple CarPlay', 'AWD', 'Sunroof', 'Leather Seats', '3-Row Seating'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=Sienna+Hybrid',
+    features: ['Power Sliding Doors', 'Rear Entertainment', 'Heated Seats'],
+    image: '/images/sienna.png',
   },
   {
-    id: 8,
-    model: 'RAV4',
-    trim: 'LE',
+    id: 11,
+    model: 'Toyota Crown',
+    trim: 'Limited Hybrid',
+    year: 2025,
+    price: 41440,
+    mileage: 5,
+    bodyType: 'Sedan',
+    fuelType: 'Hybrid',
+    mpg: 42,
+    drivetrain: 'AWD',
+    color: 'Gray',
+    seatingCapacity: 5,
+    features: ['AWD', 'Heated Steering Wheel', 'Wireless Charging'],
+    image: '/images/toyota-crown.png',
+  },
+
+  // Trucks
+  {
+    id: 12,
+    model: 'Tacoma',
+    trim: 'TRD Sport',
+    year: 2026,
+    price: 31590,
+    mileage: 10,
+    bodyType: 'Sedan',
+    fuelType: 'Gasoline',
+    mpg: 24,
+    drivetrain: '4WD',
+    color: 'Gray',
+    seatingCapacity: 5,
+    features: ['Tow Package', 'Off-Road Mode', 'Touchscreen Display'],
+    image: '/images/tacoma.png',
+  },
+  {
+    id: 13,
+    model: 'Tacoma i-FORCE MAX',
+    trim: 'Limited Hybrid',
+    year: 2020,
+    price: 46720,
+    mileage: 8,
+    bodyType: 'Truck',
+    fuelType: 'Hybrid',
+    mpg: 26,
+    drivetrain: '4WD',
+    color: 'Gray',
+    seatingCapacity: 5,
+    features: ['Hybrid Powertrain', 'AWD', 'Off-Road Assist'],
+    image: '/images/tacoma-iforce.png',
+  },
+  {
+    id: 14,
+    model: 'Tundra',
+    trim: 'SR5',
+    year: 2025,
+    price: 41260,
+    mileage: 5,
+    bodyType: 'Truck',
+    fuelType: 'Gasoline',
+    mpg: 22,
+    drivetrain: '4WD',
+    color: 'Black',
+    seatingCapacity: 5,
+    features: ['Tow Package', 'Backup Camera', 'Smart Key System'],
+    image: '/images/tundra.png',
+  },
+  {
+    id: 15,
+    model: 'Tundra i-FORCE MAX',
+    trim: 'Platinum Hybrid',
     year: 2024,
-    price: 29825,
-    mileage: 100,
+    price: 58560,
+    mileage: 4,
+    bodyType: 'Truck',
+    fuelType: 'Hybrid',
+    mpg: 25,
+    drivetrain: '4WD',
+    color: 'Black',
+    seatingCapacity: 5,
+    features: ['Heated Seats', 'Panoramic Roof', 'Tow Mode'],
+    image: '/images/tundra-iforce.png',
+  },
+
+  // SUVs & Crossovers
+  {
+    id: 16,
+    model: 'Corolla Cross',
+    trim: 'LE',
+    year: 2022,
+    price: 24935,
+    mileage: 7,
     bodyType: 'SUV',
-    fuelType: 'Gas',
-    mpg: 30,
+    fuelType: 'Gasoline',
+    mpg: 31,
     drivetrain: 'FWD',
     color: 'White',
     seatingCapacity: 5,
-    features: ['Apple CarPlay', 'Toyota Safety Sense'],
-    image: 'https://placehold.co/600x400/e0e0e0/black?text=RAV4+LE',
+    features: ['Blind Spot Monitor', 'Leather Seats', 'Sunroof'],
+    image: '/images/corolla-cross.png',
+  },
+  {
+    id: 17,
+    model: 'Corolla Cross Hybrid',
+    trim: 'XSE',
+    year: 2021,
+    price: 29295,
+    mileage: 7,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 38,
+    drivetrain: 'AWD',
+    color: 'White',
+    seatingCapacity: 5,
+    features: ['AWD', 'Wireless CarPlay', 'Leather Seats', 'Heated Seats'],
+    image: '/images/corolla-cross-hybrid.png',
+  },
+  {
+    id: 18,
+    model: 'RAV4',
+    trim: 'XLE',
+    year: 2025,
+    price: 29800,
+    mileage: 8,
+    bodyType: 'SUV',
+    fuelType: 'Gasoline',
+    mpg: 30,
+    drivetrain: 'AWD',
+    color: 'White',
+    seatingCapacity: 5,
+    features: ['Sunroof', 'Apple CarPlay', 'AWD'],
+    image: '/images/rav4.png',
+  },
+  {
+    id: 19,
+    model: 'RAV4 Hybrid',
+    trim: 'XLE Hybrid',
+    year: 2025,
+    price: 32850,
+    mileage: 8,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 40,
+    drivetrain: 'AWD',
+    color: 'Black',
+    seatingCapacity: 5,
+    features: ['AWD', 'Smart Key', 'Leather Seats', 'Heated Seats'],
+    image: '/images/rav4-hybrid.png',
+  },
+  {
+    id: 20,
+    model: 'RAV4 Plug-in Hybrid',
+    trim: 'Prime XSE',
+    year: 2025,
+    price: 44815,
+    mileage: 5,
+    bodyType: 'SUV',
+    fuelType: 'Plug-in Hybrid',
+    mpg: 38,
+    drivetrain: 'AWD',
+    color: 'Blue',
+    seatingCapacity: 5,
+    features: ['Leather Seats', 'Sunroof', 'AWD'],
+    image: '/images/rav4-prime.png',
+  },
+  {
+    id: 21,
+    model: 'bZ4X',
+    trim: 'Limited AWD',
+    year: 2025,
+    price: 34900,
+    mileage: 2,
+    bodyType: 'SUV',
+    fuelType: 'Electric',
+    mpg: 0,
+    drivetrain: 'AWD',
+    color: 'Blue',
+    seatingCapacity: 5,
+    features: ['Leather Seats', 'AWD', 'Sunroof'],
+    image: '/images/bz4x.png',
+  },
+  {
+    id: 22,
+    model: 'Highlander',
+    trim: 'XLE',
+    year: 2025,
+    price: 45270,
+    mileage: 10,
+    bodyType: 'SUV',
+    fuelType: 'Gasoline',
+    mpg: 28,
+    drivetrain: 'AWD',
+    color: 'Black',
+    seatingCapacity: 7,
+    features: ['Leather Seats', 'AWD', 'Sunroof'],
+    image: '/images/highlander.png',
+  },
+  {
+    id: 23,
+    model: 'Highlander Hybrid',
+    trim: 'Limited',
+    year: 2025,
+    price: 47020,
+    mileage: 9,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 36,
+    drivetrain: 'AWD',
+    color: 'Red',
+    seatingCapacity: 7,
+    features: ['AWD', 'Leather Seats', '3-Row Seating'],
+    image: '/images/highlander-hybrid.png',
+  },
+  {
+    id: 24,
+    model: 'Grand Highlander',
+    trim: 'XLE',
+    year: 2025,
+    price: 41360,
+    mileage: 10,
+    bodyType: 'SUV',
+    fuelType: 'Gasoline',
+    mpg: 26,
+    drivetrain: 'AWD',
+    color: 'Blue',
+    seatingCapacity: 8,
+    features: ['Leather Seats', 'AWD', '3-Row Seating'],
+    image: '/images/grand-highlander.png',
+  },
+  {
+    id: 25,
+    model: 'Grand Highlander Hybrid',
+    trim: 'Limited',
+    year: 2025,
+    price: 44710,
+    mileage: 8,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 36,
+    drivetrain: 'AWD',
+    color: 'White',
+    seatingCapacity: 8,
+    features: ['AWD', 'Leather Seats', '3-Row Seating'],
+    image: '/images/grand-highlander-hybrid.png',
+  },
+  {
+    id: 26,
+    model: '4Runner',
+    trim: 'SR5',
+    year: 2025,
+    price: 41570,
+    mileage: 10,
+    bodyType: 'SUV',
+    fuelType: 'Gasoline',
+    mpg: 20,
+    drivetrain: '4WD',
+    color: 'Black',
+    seatingCapacity: 7,
+    features: ['AWD', 'Off-Road Suspension', 'Sunroof'],
+    image: '/images/4runner.png',
+  },
+  {
+    id: 27,
+    model: '4Runner i-FORCE MAX',
+    trim: 'TRD Pro Hybrid',
+    year: 2025,
+    price: 52790,
+    mileage: 6,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 24,
+    drivetrain: '4WD',
+    color: 'Blue',
+    seatingCapacity: 7,
+    features: ['Leather Seats', 'AWD', 'Off-Road Suspension'],
+    image: '/images/4runner-iforce.png',
+  },
+  {
+    id: 28,
+    model: 'Toyota Crown Signia',
+    trim: 'XLE Hybrid',
+    year: 2025,
+    price: 44090,
+    mileage: 5,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 38,
+    drivetrain: 'AWD',
+    color: 'Black',
+    seatingCapacity: 5,
+    features: ['AWD', 'Leather Seats', 'Sunroof'],
+    image: '/images/crown-signia.png',
+  },
+  {
+    id: 29,
+    model: 'Land Cruiser',
+    trim: 'First Edition',
+    year: 2025,
+    price: 57200,
+    mileage: 4,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 23,
+    drivetrain: '4WD',
+    color: 'White',
+    seatingCapacity: 7,
+    features: ['AWD', 'Sunroof', 'Off-Road Suspension'],
+    image: '/images/land-cruiser.png',
+  },
+  {
+    id: 30,
+    model: 'Sequoia',
+    trim: 'Platinum Hybrid',
+    year: 2025,
+    price: 64025,
+    mileage: 4,
+    bodyType: 'SUV',
+    fuelType: 'Hybrid',
+    mpg: 22,
+    drivetrain: '4WD',
+    color: 'Silver',
+    seatingCapacity: 8,
+    features: ['AWD', '3-Row Seating', 'Leather Seats'],
+    image: '/images/sequoia.png',
   },
 ];
 
 
-// Reusable Filter Section Component
+//Reusable Filter Component
 const FilterSection = ({ title, children, defaultOpen = true }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   return (
@@ -159,7 +513,7 @@ const FilterSection = ({ title, children, defaultOpen = true }) => {
 };
 
 
-// Reusable Checkbox
+//Reusable Checkbox
 const FilterCheckbox = ({ id, label, isChecked, onChange }) => (
   <label htmlFor={id} className="flex items-center space-x-2 cursor-pointer">
     <input
@@ -174,7 +528,7 @@ const FilterCheckbox = ({ id, label, isChecked, onChange }) => (
 );
 
 
-// Reusable Button
+//Reusable Button
 const FilterButton = ({ label, isSelected, onClick, className = '' }) => (
   <button
     onClick={onClick}
@@ -189,7 +543,7 @@ const FilterButton = ({ label, isSelected, onClick, className = '' }) => (
 );
 
 
-// --- NEW: Color Swatch Button ---
+//Color Chooser Button
 const ColorSwatch = ({ color, isSelected, onClick }) => {
   const colorMap = {
     Black: 'bg-black',
@@ -212,9 +566,8 @@ const ColorSwatch = ({ color, isSelected, onClick }) => {
 
 
 // --- Left Sidebar Component ---
-// (Person 1: Your Zone)
 const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onClearFilters }) => {
-  // Handlers for different filter types
+
  
   // Toggles a value in an array (for checkboxes)
   const handleCheckboxChange = (key, value) => {
@@ -226,13 +579,13 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
   };
 
 
-  // Sets a single value (for radio buttons)
+  //Sets a single value 
   const handleRadioChange = (key, value) => {
     const newValue = filters[key] === value ? null : value;
     onFilterChange(key, newValue);
   };
  
-  // Handles text/number inputs
+  //Handles text/number inputs
   const handleInputChange = (key, value) => {
     onFilterChange(key, value);
   };
@@ -251,7 +604,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
       </div>
 
 
-      {/* --- NEW: Payment Estimator Section --- */}
+      {/* Payment Estimator Section */}
       <FilterSection title="Estimate Your Payment" defaultOpen={true}>
         <div className="space-y-4">
           <div>
@@ -287,7 +640,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
       </FilterSection>
 
 
-      {/* --- UPDATED: Favorites Filter (Moved to top) --- */}
+      {/* Favorites Filter (Moved to top revision lol)*/}
       <FilterSection title="My Garage" defaultOpen={true}>
         <FilterButton
           label={
@@ -301,7 +654,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
       </FilterSection>
 
 
-      {/* --- Price Filter --- */}
+      {/* Price Filter */}
       <FilterSection title="Price Range" defaultOpen={false}>
         <div className="flex flex-wrap gap-2">
           {[
@@ -320,7 +673,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
         </div>
       </FilterSection>
      
-      {/* --- NEW: Year & Mileage Filter --- */}
+      {/* Year & Mileage Filter */}
       <FilterSection title="Year & Mileage" defaultOpen={false}>
         <div className="flex gap-2">
             <div>
@@ -363,7 +716,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
       </FilterSection>
 
 
-      {/* --- Body Type Filter --- */}
+      {/* Body Type Filter */}
       <FilterSection title="Body Type" defaultOpen={false}>
         <div className="flex flex-wrap gap-2">
           {['SUV', 'Sedan', 'Truck', 'Minivan'].map((type) => (
@@ -378,7 +731,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
       </FilterSection>
 
 
-      {/* --- Fuel Type Filter --- */}
+      {/* Fuel Type Filter */}
       <FilterSection title="Fuel Type" defaultOpen={false}>
         <div className="flex flex-wrap gap-2">
           {['Gas', 'Hybrid', 'Electric'].map((type) => (
@@ -392,7 +745,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
         </div>
       </FilterSection>
      
-      {/* --- NEW: MPG Filter --- */}
+      {/* MilesPerGallon Filter */}
       <FilterSection title="MPG" defaultOpen={false}>
         <div className="flex flex-wrap gap-2">
           {[
@@ -410,7 +763,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
         </div>
       </FilterSection>
      
-      {/* --- NEW: Seating Capacity Filter --- */}
+      {/* Seating Capacity Filter */}
       <FilterSection title="Seating Capacity" defaultOpen={false}>
         <div className="flex flex-wrap gap-2">
           {[
@@ -428,7 +781,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
         </div>
       </FilterSection>
      
-      {/* --- NEW: Color Filter --- */}
+      {/* Color Filter */}
       <FilterSection title="Exterior Color" defaultOpen={false}>
         <div className="flex flex-wrap gap-2">
           {['Black', 'White', 'Silver', 'Gray', 'Red', 'Blue'].map((color) => (
@@ -443,7 +796,7 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
       </FilterSection>
 
 
-      {/* --- Features Filter --- */}
+      {/* Features Filter */}
       <FilterSection title="Features" defaultOpen={false}>
         <div className="space-y-3">
           {['Sunroof', 'Leather Seats', 'AWD', '3-Row Seating', 'Off-Road Suspension'].map((feature) => (
@@ -463,12 +816,11 @@ const Sidebar = ({ filters, paymentInputs, onFilterChange, onPaymentChange, onCl
 };
 
 
-// --- Car Card Component ---
-// (Person 1: Your Zone)
+// Car cards
 const CarCard = ({ car, estimatedPayment, onDetailsClick, onCompareToggle, onFavoriteToggle, isFavorited, isComparing }) => {
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm transition-shadow hover:shadow-lg relative">
-      {/* --- NEW: Favorite Button --- */}
+      {/* Favorite Button */}
       <button
         onClick={() => onFavoriteToggle(car.id)}
         className="absolute top-2 right-2 p-2 bg-white/70 rounded-full text-red-600 backdrop-blur-sm transition-transform hover:scale-110 z-10"
@@ -496,7 +848,7 @@ const CarCard = ({ car, estimatedPayment, onDetailsClick, onCompareToggle, onFav
         </h3>
         <p className="text-gray-600">{car.trim}</p>
        
-        {/* --- NEW: Payment Display --- */}
+        {/* Payment Display */}
         <div className="flex items-end gap-2 my-2">
             <span className="text-xl font-extrabold text-black">${car.price.toLocaleString()}</span>
             {estimatedPayment && (
@@ -514,7 +866,8 @@ const CarCard = ({ car, estimatedPayment, onDetailsClick, onCompareToggle, onFav
           <span>{car.drivetrain}</span>
         </div>
       </div>
-      {/* --- NEW: Compare Button --- */}
+
+      {/* Compare Button */}
       <div className="p-4 border-t bg-gray-50">
           <FilterButton
             label={isComparing ? "Remove from Compare" : "Compare"}
@@ -527,8 +880,7 @@ const CarCard = ({ car, estimatedPayment, onDetailsClick, onCompareToggle, onFav
 };
 
 
-// --- NEW: Details Modal (with Finance Calculator) ---
-// (This is now just a details modal, the main calculator is in the sidebar)
+// Details (Finance Calculator)
 const DetailsModal = ({ car, onClose, onFindDealers }) => {
   if (!car) return null;
 
@@ -583,8 +935,7 @@ const DetailsModal = ({ car, onClose, onFindDealers }) => {
 };
 
 
-// --- NEW: Compare Bar ---
-// ... (code is identical to previous version) ...
+//Comparison Bar ---
 const CompareBar = ({ carsToCompare, onClearCompare, onShowCompare }) => {
   if (carsToCompare.length === 0) return null;
 
@@ -616,13 +967,10 @@ const CompareBar = ({ carsToCompare, onClearCompare, onShowCompare }) => {
   );
 };
 
-
-// --- NEW: Compare Modal ---
-// (Added new fields to compare)
 const CompareModal = ({ cars, onClose }) => {
   if (cars.length === 0) return null;
  
-  // Updated properties
+  //Options 
   const properties = ['price', 'year', 'mileage', 'mpg', 'fuelType', 'drivetrain', 'seatingCapacity', 'features'];
   const labels = {
     price: 'Price',
@@ -675,26 +1023,35 @@ const CompareModal = ({ cars, onClose }) => {
 };
 
 
-// --- NEW: Mock AI Chat Modal ---
-// ... (code is identical to previous version) ...
+// AI Chat Demo
 const MockChatModal = ({ onClose }) => (
   <div className="fixed inset-0 bg-black bg-opacity-75 z-40 flex justify-center items-center p-4">
     <div className="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col">
       <div className="p-4 border-b flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Toyota AI Assistant</h2>
-        <button onClick={onClose}><XCircle size={28} className="text-gray-500 hover:text-red-600" /></button>
-      </div>
+        <div className="flex items-center space-x-2">
+          <h2 className="text-2xl font-bold">Toyota AI Bot</h2>
+          <img
+            src="/images/ToyoBot.png"
+            alt="Toyota AI Bot"
+            className="h-15 w-auto"
+          />
+          </div>
+          <button onClick={onClose}>
+            <XCircle size={28} className="text-gray-500 hover:text-red-600" />
+          </button>
+        </div>
+
       <div className="p-6 space-y-4 overflow-y-auto">
         <div className="flex justify-start">
-          <span className="p-3 bg-gray-200 rounded-lg">Hi! I'm your Toyota AI Assistant. How can I help you find the perfect car today?</span>
+          <span className="p-3 bg-gray-200 rounded-lg">Hi! I'm Toyota Bot. How can I help you find the perfect car today?</span>
         </div>
         <div className="flex justify-end">
           <span className="p-3 bg-red-600 text-white rounded-lg">I'm looking for a fuel-efficient SUV.</span>
         </div>
         <div className="flex justify-start">
-          <span className="p-3 bg-gray-200 rounded-lg">Great! Our most popular fuel-efficient SUV is the RAV4 Hybrid. It gets 40 MPG and has available AWD.</span>
+          <span className="p-3 bg-gray-200 rounded-lg">Great! Our most popular fuel-efficient SUV is the RAV4 Hybrid. It gets 40 MPG and has AWD.</span>
         </div>
-        <p className="text-center text-gray-500 text-sm py-4">Demo only. A real chatbot would be implemented here.</p>
+        <p className="text-center text-gray-500 text-sm py-4">This is a non-functional demo only. A real chatbot would be implemented here.</p>
       </div>
       <div className="p-4 border-t bg-gray-50">
         <input type="text" placeholder="Type your message..." className="w-full p-3 border border-gray-300 rounded-full" disabled />
@@ -704,8 +1061,6 @@ const MockChatModal = ({ onClose }) => (
 );
 
 
-// --- NEW: Mock Dealers Modal ---
-// ... (code is identical to previous version) ...
 const MockDealersModal = ({ onClose }) => (
   <div className="fixed inset-0 bg-black bg-opacity-75 z-40 flex justify-center items-center p-4">
     <div className="bg-white rounded-lg shadow-2xl max-w-md w-full">
@@ -717,20 +1072,20 @@ const MockDealersModal = ({ onClose }) => (
         <p className="text-gray-600">Based on your location (Richardson, TX):</p>
         <div className="p-4 border rounded-lg">
           <h3 className="font-bold">Toyota of Richardson</h3>
-          <p className="text-sm text-gray-600">1001 S US-75, Richardson, TX 75080</p>
+          <p className="text-sm text-gray-600">1221 Central Expy, Richardson, TX 75080</p>
         </div>
         <div className="p-4 border rounded-lg">
           <h3 className="font-bold">Toyota of Plano</h3>
-          <p className="text-sm text-gray-600">6888 TX-121, Plano, TX 75024</p>
+          <p className="text-sm text-gray-600">6888 State Hwy 121, Plano, TX 75024</p>
         </div>
-        <p className="text-center text-gray-500 text-sm py-4">Demo only. A real app would use the Google Maps API.</p>
+        <p className="text-center text-gray-500 text-sm py-4">Demo only. Real app would use the Google Maps API :D!</p>
       </div>
     </div>
   </div>
 );
 
 
-// --- NEW: Helper function for payment calculation ---
+// Payment Calc (Average New Car APR..Kind of)
 const calculateMonthlyPayment = (price, downPayment, creditScore) => {
     // 1. Get Interest Rate (Mocked based on credit score)
     let rate = 0.10; // 10.0% (Building: 600-659)
@@ -738,7 +1093,7 @@ const calculateMonthlyPayment = (price, downPayment, creditScore) => {
     else if (creditScore >= 740) rate = 0.061; // 6.1% (Great: 740-799)
     else if (creditScore >= 660) rate = 0.078; // 7.8% (Good: 660-739)
    
-    const term = 72; // 72 months (6 years)
+    const term = 72; //72 months (6 years)
     const loanAmount = price - downPayment;
     const monthlyRate = rate / 12;
 
@@ -752,13 +1107,13 @@ const calculateMonthlyPayment = (price, downPayment, creditScore) => {
 
 
 
-// --- Main App Component ---
+// Main App 
 export default function App() {
   const [filters, setFilters] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
  
-  // --- NEW: State for new features ---
+  //State for new features ---
   const [selectedCar, setSelectedCar] = useState(null); // For Details Modal
   const [compareList, setCompareList] = useState([]); // Array of car IDs
   const [favoritesList, setFavoritesList] = useState([]); // Array of car IDs
@@ -766,18 +1121,17 @@ export default function App() {
   const [showChatModal, setShowChatModal] = useState(false);
   const [showDealersModal, setShowDealersModal] = useState(false);
  
-  // --- NEW: State for Payment Estimator ---
+  // Payment Estimator
   const [paymentInputs, setPaymentInputs] = useState({
     creditScore: 740,
     downPayment: 5000
   });
  
-  // --- NEW: State for Sorting ---
+  // Sorting State
   const [sortBy, setSortBy] = useState('recommended');
 
 
-  // --- NEW: Sync Favorites with localStorage ---
-  // ... (code is identical to previous version) ...
+  //Sync Favorites (Doesn't work)
   useEffect(() => {
     // Load favorites from localStorage on mount
     const storedFavorites = localStorage.getItem('toyotaFavorites');
@@ -795,10 +1149,7 @@ export default function App() {
 
 
 
-  // --- (Person 3: Your Zone) ---
- 
-  // --- NEW: Step 1: Calculate payments for all cars ---
-  // This runs when the database or payment inputs change
+  //Calculate payments for all cars
   const carsWithPayments = useMemo(() => {
       const { creditScore, downPayment } = paymentInputs;
       return DB_CARS.map(car => ({
@@ -808,7 +1159,7 @@ export default function App() {
   }, [paymentInputs]);
 
 
-  // --- NEW: Step 2: Filter the cars that now have payments ---
+  // Filter the cars that now have payments
   // This runs when filters, search, or the car list changes
   const filteredCars = useMemo(() => {
     let cars = carsWithPayments; // Use the new list with payments
@@ -824,13 +1175,13 @@ export default function App() {
     }
 
 
-    // --- NEW: Favorites Filter ---
+    // Favorites Filter 
     if (filters.showFavorites) {
       cars = cars.filter(car => favoritesList.includes(car.id));
     }
 
 
-    // --- Filter Logic ---
+    // ~~Filter Logic 
    
     // Price Filter
     if (filters.price) {
@@ -845,7 +1196,7 @@ export default function App() {
       }
     }
    
-    // --- NEW FILTERS ---
+    // Feature Filter 1
     if (filters.yearMin) {
         cars = cars.filter(car => car.year >= parseInt(filters.yearMin));
     }
@@ -864,7 +1215,6 @@ export default function App() {
     if (filters.color) {
         cars = cars.filter(car => car.color === filters.color);
     }
-    // --- END NEW FILTERS ---
 
 
     // Body Type Filter
@@ -878,14 +1228,14 @@ export default function App() {
       cars = cars.filter((car) => filters.fuelType.includes(car.fuelType));
     }
    
-    // Features Filter
+    // Features Filter 2
     if (filters.features && filters.features.length > 0) {
       cars = cars.filter((car) =>
         filters.features.every((feature) => car.features.includes(feature))
       );
     }
    
-    // --- NEW: Sorting Logic ---
+    // Sort logic (Recommended is default)
     if (sortBy === 'price-low') {
       cars.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price-high') {
@@ -900,7 +1250,7 @@ export default function App() {
   }, [filters, searchTerm, favoritesList, carsWithPayments, sortBy]); // Updated dependencies
 
 
-  // --- State Handlers ---
+  // States
   const handleFilterChange = (key, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -908,7 +1258,7 @@ export default function App() {
     }));
   };
  
-  // --- NEW: Payment Input Handler ---
+  // Payment Input Handler 
   const handlePaymentChange = (key, value) => {
       setPaymentInputs(prev => ({
           ...prev,
@@ -923,8 +1273,7 @@ export default function App() {
     // Don't clear payment inputs, as user might want to keep those
   };
  
-  // --- NEW: Handlers for new features ---
-  // ... (code is identical to previous version) ...
+  // Handlers for new features
   const handleFavoriteToggle = (carId) => {
     setFavoritesList((prev) =>
       prev.includes(carId)
@@ -941,7 +1290,7 @@ export default function App() {
       if (prev.length < 3) {
         return [...prev, carId];
       }
-      // If already 3, alert user (or just don't add)
+      // If already 3, alert user
       alert("You can only compare 3 cars at a time.");
       return prev;
     });
@@ -965,22 +1314,21 @@ export default function App() {
   };
  
 
-
-  // --- (Person 1: Your Zone) ---
-  // This is the main JSX (HTML) for the app
+  // Main JSX (HTML) for the app
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       {/* --- Header --- */}
-      {/* ... (code is identical to previous version) ... */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+
           {/* Toyota Logo */}
-          <svg className="h-6" viewBox="0 0 256 195" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M73.492 194.22H3.772v-51.36h34.68v35.04h35.04v16.32zM128 177.9H78.32v-62.88H43.28V79.98h35.04V17.1h50.04v62.88h35.04v35.04h-35.04v62.88zm-33.6-84.24h83.52V33.42H94.4v60.24zM182.508 194.22v-16.32h35.04v-35.04h34.68v51.36h-69.72z" fill="#EB0A1E"/>
-              <path d="M128 72.847c23.083 0 41.792-18.709 41.792-41.792C169.792 8.972 151.083-2.833 128-2.833c-23.083 0-41.792 11.805-41.792 41.792 0 23.083 18.709 41.792 41.792 41.792zm0-67.26c14.072 0 25.472 11.4 25.472 25.472 0 14.072-11.4 25.472-25.472 25.472-14.072 0-25.472-11.4-25.472-25.472 0-14.072 11.4-25.472 25.472-25.472zM128 72.847c-50.625 0-91.5-40.875-91.5-91.5 0 0 0-2.833 0-2.833-20.25 12.083-34.5 34.083-34.5 59.916 0 35.167 28.5 63.667 63.667 63.667 15.667 0 29.917-5.583 41.25-14.833 11.333 9.25 25.583 14.833 41.25 14.833 35.167 0 63.667-28.5 63.667-63.667 0-25.833-14.25-47.833-34.5-59.916.083.916.083 1.916.083 2.833 0 50.625-40.875 91.5-91.5 91.5z" fill="#EB0A1E"/>
-          </svg>
-          <div className="font-semibold text-xl hidden sm:block">Vehicle Finder</div>
-          {/* --- NEW: AI Chat Button --- */}
+            <img
+              src="/images/Toyota_logo_(Red).svg"
+              alt="Toyota Logo"
+              className="h-10 w-auto"
+            />
+          <div className="font-semibold text-xl hidden sm:block">Toyota Vehicle Finder ˚₊‧꒰ა❤︎໒꒱ ‧₊ </div>
+          {/* --- AI Chat Button --- */}
           <button
             onClick={() => setShowChatModal(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
@@ -1035,7 +1383,6 @@ export default function App() {
           {/* --- Main Content (Results) --- */}
           <main className="w-full md:w-2/3 lg:w-3/4 md:pl-8">
             {/* Search Bar */}
-            {/* ... (code is identical to previous version) ... */}
             <div className="relative mb-4">
               <input
                 type="text"
@@ -1049,12 +1396,11 @@ export default function App() {
 
 
             {/* Results Header */}
-            {/* ... (code is identical to previous version) ... */}
             <div className="flex justify-between items-center mb-4">
               <div className="text-sm text-gray-700">
                 Showing <span className="font-bold">{filteredCars.length}</span> of <span className="font-bold">{DB_CARS.length}</span> results
               </div>
-              {/* --- UPDATED: Sorting Dropdown --- */}
+              {/* ---- Sorting Dropdown --- */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -1084,7 +1430,6 @@ export default function App() {
             </div>
            
             {filteredCars.length === 0 && (
-                // ... (code is identical to previous version) ...
                 <div className="text-center py-20">
                     <h3 className="text-2xl font-semibold">No Matching Vehicles</h3>
                     <p className="text-gray-600 mt-2">Try adjusting your filters or search term.</p>
@@ -1101,7 +1446,7 @@ export default function App() {
         </div>
       </div>
      
-      {/* --- NEW: Modals & Bars --- */}
+      {/* Modals & Bars --- */}
      
       {/* --- Compare Bar --- */}
       <CompareBar

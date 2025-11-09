@@ -1,10 +1,9 @@
 # Car Finder - Toyota Vehicle Finder
-
-A modern, interactive web application for browsing and finding Toyota vehicles. This application provides a comprehensive vehicle search experience with advanced filtering, comparison tools, and payment estimation features.
+~ A modern, interactive web application for browsing and finding Toyota vehicles. This application provides a comprehensive vehicle search experience with advanced filtering, comparison tools, and payment estimation features.
 
 ## Features
 
-### 🔍 Search & Filter
+### Search & Filter
 - **Advanced Search**: Search vehicles by model, trim, or keywords
 - **Comprehensive Filters**:
   - Price range
@@ -16,11 +15,11 @@ A modern, interactive web application for browsing and finding Toyota vehicles. 
   - Exterior color
   - Features (Sunroof, Leather Seats, AWD, etc.)
 
-### 💰 Payment Estimator
+### Payment Estimator
 - Calculate estimated monthly payments based on:
   - Vehicle price
   - Down payment
-  - Credit score (affects interest rate)
+  - Credit score which affects interest rate
 - Real-time payment calculations displayed on vehicle cards
 
 ### ⭐ Favorites & Comparison
@@ -46,7 +45,7 @@ A modern, interactive web application for browsing and finding Toyota vehicles. 
 
 ### Prerequisites
 - Node.js (v18 or higher)
-- npm or yarn
+- npm
 
 ### Installation
 
@@ -60,7 +59,7 @@ npm install
 npm run dev
 ```
 
-3. Open your browser and navigate to the URL shown in the terminal (typically `http://localhost:5173`)
+3. Open your browser and navigate to the URL shown in the terminal (looks like this: `http://localhost:5173`)
 
 ### Build for Production
 
@@ -100,3 +99,6 @@ The payment estimator uses credit score-based interest rates to calculate realis
 
 ### Comparison Tool
 Users can select up to 3 vehicles to compare side-by-side, viewing key specifications like price, year, mileage, MPG, drivetrain, seating capacity, and features in a single view.
+
+### Data Citation
+The inventory data can be found using the following link: `https://www.toyota.com/search-inventory/`. All data belongs to Toyota Motors.
