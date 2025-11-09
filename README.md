@@ -22,12 +22,12 @@
   - Credit score which affects interest rate
 - Real-time payment calculations displayed on vehicle cards
 
-### ⭐ Favorites & Comparison
+### <3 Favorites & Comparison
 - **My Garage**: Save favorite vehicles for quick access
 - **Compare Vehicles**: Side-by-side comparison of up to 3 vehicles
 - Persistent favorites saved to localStorage
 
-### 🎯 Additional Features
+### Additional Features
 - **AI Assistant**: Interactive chatbot for vehicle recommendations (demo)
 - **Find Dealers**: Locate nearby Toyota dealerships (demo)
 - **Sorting Options**: Sort by price, MPG, or recommended
