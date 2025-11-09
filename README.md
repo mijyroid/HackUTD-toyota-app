@@ -85,6 +85,7 @@ car-finder/
 │   ├── main.jsx         # Application entry point
 │   └── index.css        # Global styles
 ├── public/              # Static assets
+    ├── images           #Contains Images for Web               
 ├── index.html           # HTML template
 └── vite.config.js      # Vite configuration
 ```
