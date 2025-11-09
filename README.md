@@ -1,16 +1,102 @@
-# React + Vite
+# Car Finder - Toyota Vehicle Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive web application for browsing and finding Toyota vehicles. This application provides a comprehensive vehicle search experience with advanced filtering, comparison tools, and payment estimation features.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔍 Search & Filter
+- **Advanced Search**: Search vehicles by model, trim, or keywords
+- **Comprehensive Filters**:
+  - Price range
+  - Year and mileage
+  - Body type (SUV, Sedan, Truck, Minivan)
+  - Fuel type (Gas, Hybrid, Electric)
+  - MPG requirements
+  - Seating capacity
+  - Exterior color
+  - Features (Sunroof, Leather Seats, AWD, etc.)
 
-## React Compiler
+### 💰 Payment Estimator
+- Calculate estimated monthly payments based on:
+  - Vehicle price
+  - Down payment
+  - Credit score (affects interest rate)
+- Real-time payment calculations displayed on vehicle cards
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### ⭐ Favorites & Comparison
+- **My Garage**: Save favorite vehicles for quick access
+- **Compare Vehicles**: Side-by-side comparison of up to 3 vehicles
+- Persistent favorites saved to localStorage
 
-## Expanding the ESLint configuration
+### 🎯 Additional Features
+- **AI Assistant**: Interactive chatbot for vehicle recommendations (demo)
+- **Find Dealers**: Locate nearby Toyota dealerships (demo)
+- **Sorting Options**: Sort by price, MPG, or recommended
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Technologies
+
+- **React 19** - UI library
+- **Vite 7** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Lucide React** - Icons
+- **ESLint** - Code linting
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm run dev
+```
+
+3. Open your browser and navigate to the URL shown in the terminal (typically `http://localhost:5173`)
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+The production build will be in the `dist` directory.
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+car-finder/
+├── src/
+│   ├── App.jsx          # Main application component
+│   ├── App.css          # Application styles
+│   ├── main.jsx         # Application entry point
+│   └── index.css        # Global styles
+├── public/              # Static assets
+├── index.html           # HTML template
+└── vite.config.js      # Vite configuration
+```
+
+## Features in Detail
+
+### Filter System
+The application includes a comprehensive filter sidebar that allows users to narrow down vehicle searches by multiple criteria. Filters can be combined for precise results.
+
+### Payment Calculator
+The payment estimator uses credit score-based interest rates to calculate realistic monthly payment estimates, helping users understand the financial commitment of each vehicle.
+
+### Comparison Tool
+Users can select up to 3 vehicles to compare side-by-side, viewing key specifications like price, year, mileage, MPG, drivetrain, seating capacity, and features in a single view.
