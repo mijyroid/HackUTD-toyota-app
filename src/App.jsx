@@ -1100,6 +1100,7 @@ const calculateMonthlyPayment = (price, downPayment, creditScore) => {
 
     if (loanAmount <= 0) return 0;
    
+    //Standard amortization formula
     const payment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
     return payment.toFixed(0); // Round to nearest dollar
 };
